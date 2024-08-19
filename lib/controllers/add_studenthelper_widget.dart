@@ -2,11 +2,6 @@ import 'dart:io';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
-void navigateToNextScreen() {
-   // Get.to(() => ListStudentWidget());
-   Get.toNamed('/list_student');
-  }
-
   void showUserProfileDialog(BuildContext context) {
     showDialog(
       context: context,
