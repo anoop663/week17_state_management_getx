@@ -50,5 +50,17 @@ Future<void> deleteStudents(int id) async {
   }
 }
 
+Future<StudentModel?> getStudentById(int id) async {
+  final List<Map<String, Object?>> result = await _db.query(
+    'student',
+    where: 'id = ?',
+    whereArgs: [id],
+  );
+  if (result.isNotEmpty) {
+    return StudentModel.fromMap(result.first);
+  } else {
+    return null;
+  }
+}
 
 

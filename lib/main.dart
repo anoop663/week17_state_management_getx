@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:project_fourth/controllers/routes.dart';
 import 'package:project_fourth/db/functions/db_functions.dart';
-import 'package:project_fourth/screens/widgets/screen_home.dart';
 
 Future<void> main() async {
   await initializeDataBase();
@@ -18,7 +18,9 @@ class FourthApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home:  const ScreenHome(),
+      // home:  const ScreenHome(),
+      initialRoute: Routes.addStudent,
+      getPages: Routes.pages,
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:project_fourth/db/functions/db_functions.dart';
 import 'package:project_fourth/db/models/data_model.dart';
 import 'package:project_fourth/controllers/add_studenthelper_widget.dart';
@@ -117,7 +118,8 @@ class AddStudentWidget extends StatelessWidget {
                     Expanded(
                       child: OutlinedButton(
                         onPressed: () {
-                          navigateToNextScreen();
+                          //navigateToNextScreen();
+                          Get.toNamed('/liststudent');
                         },
                         child: const Text('View Student List'),
                       ),
