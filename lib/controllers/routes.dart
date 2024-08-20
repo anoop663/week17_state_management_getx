@@ -31,13 +31,9 @@ class Routes {
       page: () {
         final id = int.tryParse(Get.parameters['id'] ?? '0') ?? 0;
         return FutureBuilder<StudentModel?>(
-          future: getStudentById(id), // Fetch the student by ID
+          future: getStudentById(id),
           builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (snapshot.hasError) {
-              return Center(child: Text('Error: ${snapshot.error}'));
-            } else if (snapshot.hasData) {
+             if (snapshot.hasData) {
               final student = snapshot.data;
               return ViewStudentWidget(student: student!);
             } else {

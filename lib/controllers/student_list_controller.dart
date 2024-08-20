@@ -11,7 +11,7 @@ class ListStudentController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    refreshList(); // Fetch students when the controller is initialized
+    refreshList();
   }
 
   void toggleView() {

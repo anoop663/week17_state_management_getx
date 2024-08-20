@@ -30,7 +30,6 @@ class DatabaseHelper {
     } catch (e) {
       // ignore: avoid_print
       print('Error retrieving data: $e');
-      // Handle error, show error message, etc.
     }
     return null;
   }

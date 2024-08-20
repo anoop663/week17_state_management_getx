@@ -42,6 +42,6 @@ class EditUserDataController extends GetxController {
       phoneController.text,
       rollController.text,
     );
-    Get.back(result: true); // Navigate back with success result
+    Get.back(result: true);
   }
 }
