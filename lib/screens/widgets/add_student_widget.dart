@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:project_fourth/controllers/add_student_controller.dart';
+import 'package:project_fourth/controllers/add_studenthelper_widget.dart';
 import 'package:project_fourth/db/functions/db_functions.dart';
 import 'package:project_fourth/db/models/data_model.dart';
 
@@ -41,7 +42,7 @@ class AddStudentWidget extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.person),
             onPressed: () {
-              // Handle user profile dialog
+              showUserProfileDialog(context);
             },
           ),
         ],
@@ -166,8 +167,7 @@ class AddStudentWidget extends StatelessWidget {
       final phone = _phoneController.text.trim();
       final roll = _rollController.text.trim();
 
-      final image =
-          studentController.selectedImage.value?.path;
+      final image = studentController.selectedImage.value?.path;
 
       final student = StudentModel(
         name: name,
