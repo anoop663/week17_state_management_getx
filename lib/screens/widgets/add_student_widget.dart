@@ -1,17 +1,36 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:project_fourth/controllers/add_student_controller.dart';
 import 'package:project_fourth/db/functions/db_functions.dart';
 import 'package:project_fourth/db/models/data_model.dart';
-import 'package:project_fourth/controllers/add_studenthelper_widget.dart';
 
 class AddStudentWidget extends StatelessWidget {
-  AddStudentWidget({super.key, Key? key1});
+  AddStudentWidget({super.key});
 
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _ageController = TextEditingController();
   final _phoneController = TextEditingController();
   final _rollController = TextEditingController();
+
+  final StudentController studentController = Get.put(StudentController());
+
+  Future<void> _pickImage(BuildContext context) async {
+    final pickedImage =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (pickedImage != null) {
+      studentController.setImage(File(pickedImage.path));
+      // ignore: use_build_context_synchronously
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Image selected successfully'),
+          duration: Duration(seconds: 1),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +41,7 @@ class AddStudentWidget extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.person),
             onPressed: () {
-              showUserProfileDialog(context);
+              // Handle user profile dialog
             },
           ),
         ],
@@ -48,9 +67,7 @@ class AddStudentWidget extends StatelessWidget {
                     }
                   },
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
+                const SizedBox(height: 10),
                 TextFormField(
                   keyboardType: TextInputType.number,
                   controller: _ageController,
@@ -66,9 +83,7 @@ class AddStudentWidget extends StatelessWidget {
                     }
                   },
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
+                const SizedBox(height: 10),
                 TextFormField(
                   keyboardType: TextInputType.number,
                   controller: _phoneController,
@@ -84,9 +99,7 @@ class AddStudentWidget extends StatelessWidget {
                     }
                   },
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
+                const SizedBox(height: 10),
                 TextFormField(
                   controller: _rollController,
                   decoration: const InputDecoration(
@@ -101,9 +114,22 @@ class AddStudentWidget extends StatelessWidget {
                     }
                   },
                 ),
-                const SizedBox(
-                  height: 10,
+                const SizedBox(height: 10),
+                OutlinedButton(
+                  onPressed: () {
+                    _pickImage(context);
+                  },
+                  child: const Text('Upload Image'),
                 ),
+                const SizedBox(height: 10),
+                Obx(() {
+                  final image = studentController.selectedImage.value;
+                  return image != null
+                      ? Image.file(image,
+                          height: 100, width: 100, fit: BoxFit.cover)
+                      : const Text('No image selected');
+                }),
+                const SizedBox(height: 10),
                 Row(
                   children: [
                     Expanded(
@@ -118,7 +144,6 @@ class AddStudentWidget extends StatelessWidget {
                     Expanded(
                       child: OutlinedButton(
                         onPressed: () {
-                          //navigateToNextScreen();
                           Get.toNamed('/liststudent');
                         },
                         child: const Text('View Student List'),
@@ -141,11 +166,15 @@ class AddStudentWidget extends StatelessWidget {
       final phone = _phoneController.text.trim();
       final roll = _rollController.text.trim();
 
+      final image =
+          studentController.selectedImage.value?.path;
+
       final student = StudentModel(
         name: name,
         age: age,
         phone: phone,
         roll: roll,
+        imagePath: image,
       );
 
       addStudent(student);
@@ -160,6 +189,8 @@ class AddStudentWidget extends StatelessWidget {
           content: Text('Student information added successfully'),
         ),
       );
+
+      studentController.setImage(null);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(

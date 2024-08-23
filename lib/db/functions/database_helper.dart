@@ -11,7 +11,7 @@ class DatabaseHelper {
       version: 1,
       onCreate: (Database db, int version) async {
         await db.execute(
-          'CREATE TABLE IF NOT EXISTS student (id INTEGER PRIMARY KEY, name TEXT, age TEXT, phone TEXT, roll TEXT)',
+          'CREATE TABLE IF NOT EXISTS student (id INTEGER PRIMARY KEY, name TEXT, age TEXT, phone TEXT, roll TEXT, imagePath TEXT)',
         );
       },
     );
@@ -34,7 +34,7 @@ class DatabaseHelper {
     return null;
   }
 
-  Future<void> updateUserData(int idvalue, String name, String age, String phone, String roll) async {
+  Future<void> updateUserData(int idvalue, String name, String age, String phone, String roll, String imagePath) async {
     try {
       await _db.update(
         'student',
@@ -43,6 +43,7 @@ class DatabaseHelper {
           'age': age,
           'phone': phone,
           'roll': roll,
+          'imagePath': imagePath,
         },
         where: 'id = ?',
         whereArgs: [idvalue],

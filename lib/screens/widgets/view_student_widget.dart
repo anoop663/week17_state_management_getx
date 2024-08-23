@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:project_fourth/db/models/data_model.dart';
 
@@ -25,10 +27,13 @@ class ViewStudentWidget extends StatelessWidget {
               Container(
                 width: double.infinity,
                 height: 200,
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
+                decoration: BoxDecoration(
+                  borderRadius:
+                      const BorderRadius.vertical(top: Radius.circular(15)),
                   image: DecorationImage(
-                    image: AssetImage('lib/assets/student1.png'),
+                    image: student.imagePath != null && student.imagePath!.isNotEmpty
+                        ? FileImage(File(student.imagePath!)) as ImageProvider
+                        : const AssetImage('lib/assets/student1.png'),
                     fit: BoxFit.cover,
                   ),
                 ),

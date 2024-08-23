@@ -12,7 +12,7 @@ Future<void> initializeDataBase() async {
     version: 1,
     onCreate: (Database db, int version) async {
       await db.execute(
-          'CREATE TABLE student(id INTEGER PRIMARY KEY, name TEXT, age TEXT, phone TEXT, roll TEXT)');
+          'CREATE TABLE student(id INTEGER PRIMARY KEY, name TEXT, age TEXT, phone TEXT, roll TEXT, imagePath TEXT)');
     },
   );
   getAllStudents();
@@ -20,8 +20,8 @@ Future<void> initializeDataBase() async {
 
 Future<void> addStudent(StudentModel value) async {
   await _db.rawInsert(
-    'INSERT INTO student (id, name, age, phone, roll) VALUES (?, ?, ?, ?, ?)',
-    [value.id, value.name, value.age, value.phone, value.roll],
+    'INSERT INTO student (id, name, age, phone, roll, imagePath) VALUES (?, ?, ?, ?, ?, ?)',
+    [value.id, value.name, value.age, value.phone, value.roll, value.imagePath],
   );
   getAllStudents();
 }

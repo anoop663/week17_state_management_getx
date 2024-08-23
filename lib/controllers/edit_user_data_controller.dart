@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project_fourth/db/functions/database_helper.dart';
@@ -8,7 +10,8 @@ class EditUserDataController extends GetxController {
   final ageController = TextEditingController();
   final phoneController = TextEditingController();
   final rollController = TextEditingController();
-  
+  final Rxn<File> selectedImage = Rxn<File>();
+
   final DatabaseHelper _dbHelper = DatabaseHelper();
 
   EditUserDataController({required this.idvalue});
@@ -31,6 +34,9 @@ class EditUserDataController extends GetxController {
       ageController.text = data['age'];
       phoneController.text = data['phone'];
       rollController.text = data['roll'];
+      if (data['imagePath'] != null && data['imagePath'].isNotEmpty) {
+        selectedImage.value = File(data['imagePath']);
+      }
     }
   }
 
@@ -41,6 +47,7 @@ class EditUserDataController extends GetxController {
       ageController.text,
       phoneController.text,
       rollController.text,
+      selectedImage.value?.path ?? '',
     );
     Get.back(result: true);
   }

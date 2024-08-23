@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project_fourth/controllers/student_list_controller.dart';
@@ -53,7 +55,14 @@ Widget buildGridView(List<StudentModel> filteredList) {
 
 Widget buildListTile(StudentModel data) {
   return ListTile(
-    leading: Image.asset('lib/assets/student1.png'),
+    leading: data.imagePath != null && data.imagePath!.isNotEmpty
+        ? Image.file(
+            File(data.imagePath!),
+            width: 50,
+            height: 50,
+            fit: BoxFit.cover,
+          )
+        : Image.asset('lib/assets/student1.png'),
     title: Text(data.name),
     subtitle: Row(
       children: [
@@ -61,9 +70,10 @@ Widget buildListTile(StudentModel data) {
         TextButton(
           onPressed: () async {
             if (data.id != null) {
-              final result = await 
-              //Get.to(() => EditUserDataPage2(idvalue: data.id!, refreshCallback: () {},));
-              Get.toNamed('/updatestudent', parameters: {'id': data.id.toString()});
+              final result = await
+                  //Get.to(() => EditUserDataPage2(idvalue: data.id!, refreshCallback: () {},));
+                  Get.toNamed('/updatestudent',
+                      parameters: {'id': data.id.toString()});
               if (result == true) {
                 Get.find<ListStudentController>().refreshList();
               }
@@ -79,7 +89,8 @@ Widget buildListTile(StudentModel data) {
           onPressed: () {
             if (data.id != null) {
               //Get.to(() => ViewStudentWidget(student: data));
-              Get.toNamed('/viewstudent', parameters: {'id': data.id.toString()});
+              Get.toNamed('/viewstudent',
+                  parameters: {'id': data.id.toString()});
             } else {
               // ignore: avoid_print
               print('The Id value of the data is null');
@@ -119,10 +130,14 @@ Widget buildGridTile(StudentModel data) {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Expanded(
-              child: Image.asset(
-                'lib/assets/student1.png',
-                fit: BoxFit.cover,
-              ),
+              child: data.imagePath != null && data.imagePath!.isNotEmpty
+                  ? Image.file(
+                      File(data.imagePath!),
+                      width: 50,
+                      height: 50,
+                      fit: BoxFit.cover,
+                    )
+                  : Image.asset('lib/assets/student1.png'),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
